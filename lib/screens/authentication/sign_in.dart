@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:whoop/screens/authentication/sign_up.dart';
+import 'package:whoop/services/auth_services.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -8,6 +11,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  AuthServices _authServices = AuthServices();
   String _email;
 
   String _password;
@@ -45,7 +49,7 @@ class _SignInState extends State<SignIn> {
                             style: GoogleFonts.notoSans(
                               textStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.greenAccent,
+                                color: Theme.of(context).accentColor,
                                 fontSize: 36,
                               ),
                             ),
@@ -53,11 +57,11 @@ class _SignInState extends State<SignIn> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 14.0),
+                    const SizedBox(height: 12.0),
                     TextFormField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).cardColor,
                         filled: true,
                         hintText: 'Email',
                         prefixIcon: Icon(Icons.alternate_email),
@@ -66,11 +70,11 @@ class _SignInState extends State<SignIn> {
                       maxLines: 1,
                       onChanged: (email) => _email = email,
                     ),
-                    const SizedBox(height: 14.0),
+                    const SizedBox(height: 12.0),
                     TextFormField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).cardColor,
                         filled: true,
                         hintText: 'Password',
                         prefixIcon: Icon(Icons.security),
@@ -80,50 +84,79 @@ class _SignInState extends State<SignIn> {
                       maxLines: 1,
                       onChanged: (pass) => _password = pass,
                     ),
-                    const SizedBox(height: 14.0),
+                    const SizedBox(height: 12.0),
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(
                         'Forgot Password?',
-                        style: TextStyle(color: Colors.greenAccent),
+                        style: TextStyle(color: Theme.of(context).accentColor),
                       ),
                     ),
-                    const SizedBox(height: 14.0),
+                    const SizedBox(height: 12.0),
                     SizedBox(
                       width: size.width,
-                      height: 50,
+                      height: 38,
                       child: RaisedButton(
                         child: Text(
-                          'LogIn',
-                          style: GoogleFonts.notoSans(textStyle: TextStyle(fontSize: 22.0)),
+                          'SignIn',
+                          style: GoogleFonts.notoSans(
+                            textStyle: TextStyle(fontSize: 20.0),
+                          ),
                         ),
                         textColor: Colors.white,
-                        color: Colors.greenAccent,
+                        color: Theme.of(context).accentColor,
                         onPressed: () {},
                       ),
                     ),
-                    const SizedBox(height: 14.0),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Don\'t have Account? ',
-                            style: GoogleFonts.notoSans(
-                              textStyle: TextStyle(
-                                color: Colors.grey[800],
-                              ),
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'SignUp now.',
-                            style: GoogleFonts.notoSans(
-                              textStyle: TextStyle(
-                                color: Colors.greenAccent,
-                              ),
-                            ),
-                          ),
-                        ],
+                    const SizedBox(height: 12.0),
+                    Text(
+                      'OR',
+                      style: GoogleFonts.notoSans(
+                        textStyle: TextStyle(color: Theme.of(context).accentColor),
                       ),
+                    ),
+                    const SizedBox(height: 12.0),
+                    SizedBox(
+                      width: size.width,
+                      height: 38,
+                      child: FlatButton(
+                        onPressed: () => _authServices.signInWithGoogle(context),
+                        textColor: Colors.white,
+                        color: Theme.of(context).accentColor,
+                        child: Text(
+                          'SignIn with Google',
+                          style: GoogleFonts.notoSans(textStyle: TextStyle(fontSize: 20.0)),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Don\'t have Account?',
+                          style: GoogleFonts.notoSans(
+                            textStyle: TextStyle(
+                              color: Theme.of(context).iconTheme.color,
+                            ),
+                          ),
+                        ),
+                        FlatButton(
+                          onPressed: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => SignUp(),
+                            ),
+                          ),
+                          child: Text(
+                            'SignUp now.',
+                            style: GoogleFonts.notoSans(
+                              textStyle: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),

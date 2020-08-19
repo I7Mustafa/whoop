@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:whoop/screens/authentication/sign_in.dart';
 import 'package:whoop/screens/list_of_recent_chat.dart/list_of_recent_chat.dart';
@@ -12,6 +13,8 @@ class AuthServices {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final UserServices _userServices = UserServices();
+
+  FToast _fToast;
 
   Future signInWithGoogle(BuildContext context) async {
     final GoogleSignInAccount signInAccount = await _googleSignIn
@@ -41,8 +44,8 @@ class AuthServices {
     final FirebaseUser currentUser = await _firebaseAuth.currentUser();
     assert(firebaseUser.uid == currentUser.uid);
 
-    SharedPreferencesServices.saveStringToSharedPreferences('id', currentUser.uid);
-    SharedPreferencesServices.saveStringToSharedPreferences('name', currentUser.displayName);
+    await saveStringToSharedPreferences('id', currentUser.uid);
+    await saveStringToSharedPreferences('name', currentUser.displayName);
 
     Navigator.pushReplacement(
       context,
@@ -54,20 +57,15 @@ class AuthServices {
 
   Future signUp(BuildContext context) async {}
 
-  Future signOut(BuildContext context) async {
-    try {
-      await _googleSignIn.signOut().whenComplete(() {
-        SharedPreferencesServices.removeFromSharedPreferences('id');
-        SharedPreferencesServices.removeFromSharedPreferences('name');
+  Future signOut(BuildContext context, String message) async {
+    await _googleSignIn.signOut().whenComplete(() async {
+      await removeFromSharedPreferences('id');
+      await removeFromSharedPreferences('name');
 
-        Navigator.pushReplacement(
-          context,
-          CupertinoPageRoute(builder: (context) => SignIn()),
-        );
-      });
-      Scaffold.of(context).showSnackBar(snackBar('User Successfuly Signed Out'));
-    } catch (e) {
-      Scaffold.of(context).showSnackBar(snackBar('Error'));
-    }
+      Navigator.pushReplacement(
+        context,
+        CupertinoPageRoute(builder: (context) => SignIn()),
+      );
+    });
   }
 }
