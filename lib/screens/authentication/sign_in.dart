@@ -27,7 +27,7 @@ class _SignInState extends State<SignIn> {
           child: Center(
             child: Form(
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 28.0),
+                margin: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -112,7 +112,9 @@ class _SignInState extends State<SignIn> {
                     Text(
                       'OR',
                       style: GoogleFonts.notoSans(
-                        textStyle: TextStyle(color: Theme.of(context).accentColor),
+                        textStyle: TextStyle(
+                          color: Colors.grey[600],
+                        ),
                       ),
                     ),
                     const SizedBox(height: 12.0),
@@ -120,7 +122,7 @@ class _SignInState extends State<SignIn> {
                       width: size.width,
                       height: 38,
                       child: FlatButton(
-                        onPressed: () => _authServices.signInWithGoogle(context),
+                        onPressed: () => _authServices.tryToSignInWithGoogle(context),
                         textColor: Colors.white,
                         color: Theme.of(context).accentColor,
                         child: Text(

@@ -16,39 +16,7 @@ class _ListOfRecentChatState extends State<ListOfRecentChat> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Builder(
-            builder: (context) => PopupMenuButton(itemBuilder: (context) {
-              return <PopupMenuItem<String>>[
-                PopupMenuItem(
-                  child: Text('Settings'),
-                  value: 'settings',
-                ),
-                PopupMenuItem(
-                  child: Text('Sign Out'),
-                  value: 'signOut',
-                ),
-              ];
-            }, onSelected: (value) {
-              if (value == 'settings') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SignIn(),
-                  ),
-                );
-              } else {
-                try {
-                  _authServices.signOut(context, 'Sign Out Sucssesfuly').whenComplete(() =>
-                      Scaffold.of(context)
-                          .showSnackBar(SnackBar(content: Text('Sign Out Sucssesfuly'))));
-                } catch (e) {
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text(e.toString())),
-                  );
-                }
-              }
-            }),
-          ),
+          buildPopupMenuButton(context),
         ],
       ),
       body: Container(
@@ -109,6 +77,35 @@ class _ListOfRecentChatState extends State<ListOfRecentChat> {
           ],
         ),
       ),
+    );
+  }
+
+  PopupMenuButton<String> buildPopupMenuButton(BuildContext context) {
+    return PopupMenuButton(
+      itemBuilder: (context) {
+        return <PopupMenuItem<String>>[
+          PopupMenuItem(
+            child: Text('Settings'),
+            value: 'settings',
+          ),
+          PopupMenuItem(
+            child: Text('Sign Out'),
+            value: 'signOut',
+          ),
+        ];
+      },
+      onSelected: (value) {
+        if (value == 'settings') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SignIn(),
+            ),
+          );
+        } else {
+          _authServices.signOut(context);
+        }
+      },
     );
   }
 }

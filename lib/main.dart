@@ -11,7 +11,6 @@ void main() async {
   String userId;
   await getBoolFromSharedPreferences('darkTheme').then((value) => theme = value);
   await getStringFromSharedPreferences('id').then((value) => userId = value);
-  print(userId);
   runApp(
     ChangeNotifierProvider<WhoopTheme>(
       create: (context) => WhoopTheme(

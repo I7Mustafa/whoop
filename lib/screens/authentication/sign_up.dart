@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:whoop/screens/authentication/sign_in.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -26,7 +28,7 @@ class _SignUpState extends State<SignUp> {
           child: Center(
             child: Form(
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 28.0),
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -48,7 +50,7 @@ class _SignUpState extends State<SignUp> {
                             style: GoogleFonts.notoSans(
                               textStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.greenAccent,
+                                color: Theme.of(context).accentColor,
                                 fontSize: 36,
                               ),
                             ),
@@ -60,7 +62,7 @@ class _SignUpState extends State<SignUp> {
                     TextFormField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).cardColor,
                         filled: true,
                         hintText: 'Name',
                         prefixIcon: Icon(Icons.perm_identity),
@@ -73,7 +75,7 @@ class _SignUpState extends State<SignUp> {
                     TextFormField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).cardColor,
                         filled: true,
                         hintText: 'Email Address',
                         prefixIcon: Icon(Icons.alternate_email),
@@ -86,7 +88,7 @@ class _SignUpState extends State<SignUp> {
                     TextFormField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).cardColor,
                         filled: true,
                         hintText: 'Password',
                         prefixIcon: Icon(Icons.security),
@@ -100,7 +102,7 @@ class _SignUpState extends State<SignUp> {
                     TextFormField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).cardColor,
                         filled: true,
                         hintText: 'Re Enter Your Password',
                         prefixIcon: Icon(Icons.security),
@@ -120,9 +122,38 @@ class _SignUpState extends State<SignUp> {
                           style: GoogleFonts.notoSans(textStyle: TextStyle(fontSize: 20.0)),
                         ),
                         textColor: Colors.white,
-                        color: Colors.greenAccent,
+                        color: Theme.of(context).accentColor,
                         onPressed: () {},
                       ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'You already have Account?',
+                          style: GoogleFonts.notoSans(
+                            textStyle: TextStyle(
+                              color: Theme.of(context).iconTheme.color,
+                            ),
+                          ),
+                        ),
+                        FlatButton(
+                          onPressed: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => SignIn(),
+                            ),
+                          ),
+                          child: Text(
+                            'SignIn now',
+                            style: GoogleFonts.notoSans(
+                              textStyle: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),
